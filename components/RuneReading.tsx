@@ -149,14 +149,15 @@ export function RuneReading() {
       - Divida a resposta em seções claras.`;
 
       const response = await getAi().models.generateContent({
-        model: "gemini-3-flash-preview",
+        model: "gemini-2.0-flash",
         contents: prompt,
       });
 
       setAiInterpretation(response.text || 'Não foi possível obter uma interpretação no momento.');
     } catch (error) {
       console.error('Error getting AI interpretation:', error);
-      setAiInterpretation('O oráculo está em silêncio... (Erro ao conectar com a IA)');
+      const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao conectar com a IA';
+      setAiInterpretation(`O oráculo está em silêncio... (${errorMessage})`);
     } finally {
       setIsLoadingAi(false);
     }
