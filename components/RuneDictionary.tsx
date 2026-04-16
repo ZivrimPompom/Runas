@@ -1,7 +1,7 @@
 'use client';
 
 import { ELDER_FUTHARK, Rune } from '@/lib/runes';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { RuneCard } from './RuneCard';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -18,6 +18,7 @@ import {
 export function RuneDictionary() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRune, setSelectedRune] = useState<Rune | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
   
   // Pre-calculate stable rotations for the dictionary runes
   const [rotations] = useState(() => 
@@ -27,11 +28,18 @@ export function RuneDictionary() {
     }, {} as Record<string, number>)
   );
 
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsMounted(true);
+  }, []);
+
   const filteredRunes = ELDER_FUTHARK.filter(rune => 
     rune.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     rune.meaning.toLowerCase().includes(searchTerm.toLowerCase()) ||
     rune.keywords.some(kw => kw.toLowerCase().includes(searchTerm.toLowerCase()))
   );
+
+  if (!isMounted) return null;
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4 py-12 space-y-12">

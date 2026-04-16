@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Rune, ELDER_FUTHARK } from '@/lib/runes';
 import { RuneCard } from './RuneCard';
 import { Button as ShadcnButton } from '@/components/ui/button';
@@ -17,7 +17,18 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 
-const ai = new GoogleGenAI({ apiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY });
+// Initialize Gemini lazily to avoid crashes if API key is missing
+let ai: GoogleGenAI | null = null;
+const getAi = () => {
+  if (!ai) {
+    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error('Chave de API do Gemini não configurada. Adicione NEXT_PUBLIC_GEMINI_API_KEY às variáveis de ambiente.');
+    }
+    ai = new GoogleGenAI({ apiKey });
+  }
+  return ai;
+};
 
 interface PoolRune extends Rune {
   initialRotate: number;
@@ -25,7 +36,7 @@ interface PoolRune extends Rune {
 
 export function RuneReading() {
   const [step, setStep] = useState<'menu' | 'selecting' | 'reading'>('menu');
-  const [reading, setReading] = useState<Rune[]>([]);
+  const [reading, setReading] = useState<(Rune | null)[]>([]);
   const [isFlipped, setIsFlipped] = useState<boolean[]>([]);
   const [isInverted, setIsInverted] = useState<boolean[]>([]);
   const [spreadType, setSpreadType] = useState<'1' | '3' | '5' | 'yesno'>('1');
@@ -37,6 +48,12 @@ export function RuneReading() {
   const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
   const [requiredCount, setRequiredCount] = useState(0);
   const [selectedRune, setSelectedRune] = useState<Rune | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsMounted(true);
+  }, []);
 
   const startSelection = async (count: number, type: '1' | '3' | '5' | 'yesno') => {
     setReading(new Array(count).fill(null));
@@ -112,7 +129,7 @@ export function RuneReading() {
 
       const positions = spreadDescriptions[spreadType] || [];
       const runeDetails = reading.map((r, i) => 
-        `${positions[i] || 'Posição ' + (i+1)}: ${r.name}${isInverted[i] ? ' (Invertida/Merkstave)' : ''}`
+        `${positions[i] || 'Posição ' + (i+1)}: ${r?.name || 'Runa'}${isInverted[i] ? ' (Invertida/Merkstave)' : ''}`
       ).join('\n');
 
       const prompt = `Você é um mestre oraculista de runas nórdicas (Elder Futhark). 
@@ -131,7 +148,7 @@ export function RuneReading() {
       - Use um tom solene, poético e inspirador em português brasileiro.
       - Divida a resposta em seções claras.`;
 
-      const response = await ai.models.generateContent({
+      const response = await getAi().models.generateContent({
         model: "gemini-3-flash-preview",
         contents: prompt,
       });
@@ -158,6 +175,8 @@ export function RuneReading() {
   const revealAll = () => {
     setIsFlipped(new Array(reading.length).fill(true));
   };
+
+  if (!isMounted) return null;
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4 py-4">
@@ -350,9 +369,9 @@ export function RuneReading() {
                           animate={{ opacity: 1, y: 0 }}
                           className="text-center space-y-1 bg-white dark:bg-stone-900 p-3 rounded-2xl shadow-md border border-stone-50 dark:border-stone-800 max-w-[180px] relative z-20"
                         >
-                          <h3 className="text-sm font-serif font-bold text-stone-900 dark:text-stone-100">{rune.name}</h3>
+                          <h3 className="text-sm font-serif font-bold text-stone-900 dark:text-stone-100">{rune?.name}</h3>
                           <p className="text-[10px] text-stone-600 dark:text-stone-400 italic leading-tight">
-                            {isInverted[index] ? `Invertida: ${rune.name}` : rune.meaning}
+                            {isInverted[index] ? `Invertida: ${rune?.name}` : rune?.meaning}
                           </p>
                           <ShadcnButton 
                             variant="ghost" 

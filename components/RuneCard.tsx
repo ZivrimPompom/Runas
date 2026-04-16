@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 
 interface RuneCardProps {
-  rune: Rune;
+  rune: Rune | null;
   isFlipped?: boolean;
   isInverted?: boolean;
   onClick?: () => void;
@@ -20,6 +20,8 @@ export function RuneCard({ rune, isFlipped = true, isInverted = false, onClick, 
     md: 'w-24 h-32 text-4xl',
     lg: 'w-32 h-44 text-6xl',
   };
+
+  if (!rune) return null;
 
   // 3D thickness offsets based on size
   const thickness = size === 'sm' ? '5px' : size === 'md' ? '8px' : '10px';
