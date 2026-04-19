@@ -188,7 +188,7 @@ export function RuneReading() {
 
   const getSpreadLayout = () => {
     if (spreadType === '5') {
-      return "grid grid-cols-3 grid-rows-3 gap-x-8 gap-y-2 w-full max-w-5xl mx-auto items-center justify-items-center min-h-[280px]";
+      return "grid grid-cols-3 grid-rows-3 gap-x-12 gap-y-1 w-full max-w-5xl mx-auto items-center justify-items-center min-h-[240px]";
     }
     if (spreadType === '3') {
       return "grid grid-cols-3 gap-20 md:gap-28 w-full max-w-5xl mx-auto items-center justify-items-center min-h-[280px]";
@@ -352,7 +352,7 @@ export function RuneReading() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
               {/* Left Column: The Spread */}
               <div className={cn(getSpreadLayout(), "w-full py-6")}>
                 {reading.map((rune, index) => {
