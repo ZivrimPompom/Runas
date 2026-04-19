@@ -137,32 +137,18 @@ export function RuneDictionary() {
 
 function DictionaryCard({ rune, onSelect }: { rune: Rune, onSelect: () => void }) {
   const [showTooltip, setShowTooltip] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const handleMouseEnter = () => {
-    timeoutRef.current = setTimeout(() => {
-      setShowTooltip(true);
-    }, 300);
-  };
-
-  const handleMouseLeave = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    setShowTooltip(false);
-  };
 
   return (
     <div 
       className="relative flex flex-col items-center w-20"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={() => setShowTooltip(true)}
+      onMouseLeave={() => setShowTooltip(false)}
       onClick={onSelect}
     >
       <RuneCard
         rune={rune}
         size="sm"
-        className="relative mx-auto"
+        className="relative mx-auto hover:scale-110 transition-transform duration-200"
       />
       <div className="mt-2 text-center">
         <div className="font-semibold text-xs text-stone-700 dark:text-stone-300">{rune.name}</div>
