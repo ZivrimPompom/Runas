@@ -373,8 +373,8 @@ export function RuneReading() {
 
                   return (
                     <div key={`result-${index}`} className={cn("flex flex-row items-center gap-1", gridClass)}>
+                      <span className="text-[9px] uppercase tracking-[0.2em] text-stone-400 font-bold w-12 text-right">{positionLabel}</span>
                       <div className="flex flex-col items-center">
-                        <span className="text-[9px] uppercase tracking-[0.2em] text-stone-400 font-bold">{positionLabel}</span>
                         <RuneCard
                           rune={rune}
                           isInverted={isInverted[index]}
