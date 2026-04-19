@@ -178,10 +178,10 @@ export function RuneReading() {
 
   const getSpreadLayout = () => {
     if (spreadType === '5') {
-      return "grid grid-cols-3 grid-rows-3 gap-4 md:gap-8 w-full max-w-2xl mx-auto items-center justify-items-center min-h-[400px]";
+      return "grid grid-cols-3 grid-rows-3 gap-2 md:gap-4 w-full max-w-3xl mx-auto items-center justify-items-center min-h-[350px]";
     }
     if (spreadType === '3') {
-      return "grid grid-cols-3 gap-10 md:gap-20 w-full max-w-3xl mx-auto items-center justify-items-center min-h-[400px]";
+      return "grid grid-cols-3 gap-16 md:gap-24 w-full max-w-4xl mx-auto items-center justify-items-center min-h-[350px]";
     }
     return "flex flex-wrap justify-center gap-12 min-h-[250px]";
   };
@@ -342,7 +342,7 @@ export function RuneReading() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
               {/* Left Column: The Spread */}
               <div className={cn(getSpreadLayout(), "w-full py-6")}>
                 {reading.map((rune, index) => {
@@ -362,7 +362,7 @@ export function RuneReading() {
                   }
 
                   return (
-                    <div key={`result-${index}`} className={cn("flex flex-col items-center space-y-4", gridClass)}>
+                    <div key={`result-${index}`} className={cn("flex flex-col items-center space-y-2", gridClass)}>
                       <div className="flex flex-col items-center space-y-1">
                         <span className="text-[9px] uppercase tracking-[0.2em] text-stone-400 font-bold">{positionLabel}</span>
                         <RuneCard
@@ -377,7 +377,7 @@ export function RuneReading() {
                         <motion.div 
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="text-center space-y-1 bg-white dark:bg-stone-900 p-3 rounded-2xl shadow-md border border-stone-50 dark:border-stone-800 max-w-[180px] relative z-20"
+                          className="text-center space-y-1 bg-white dark:bg-stone-900 p-2 rounded-2xl shadow-md border border-stone-50 dark:border-stone-800 max-w-[160px] relative z-20"
                         >
                           <h3 className="text-sm font-serif font-bold text-stone-900 dark:text-stone-100">{rune?.name}</h3>
                           <p className="text-[10px] text-stone-600 dark:text-stone-400 italic leading-tight">
