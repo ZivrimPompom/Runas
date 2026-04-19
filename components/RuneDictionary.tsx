@@ -29,13 +29,13 @@ export function RuneDictionary() {
   const [selectedRune, setSelectedRune] = useState<Rune | null>(null);
   const [isMounted, setIsMounted] = useState(false);
   const firstButtonRef = useRef<HTMLButtonElement>(null);
-  const filtersRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     setIsMounted(true);
     setTimeout(() => {
       firstButtonRef.current?.focus();
-      filtersRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      containerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 300);
   }, []);
 
@@ -50,13 +50,13 @@ export function RuneDictionary() {
   if (!isMounted) return null;
 
   return (
-    <div className="w-full max-w-5xl mx-auto px-4 py-6 space-y-4">
-      <div className="text-center space-y-1">
+    <div ref={containerRef} className="w-full max-w-5xl mx-auto px-4 py-6 space-y-4">
+      <div className="text-center space-y-1 pt-4">
         <h2 className="text-2xl font-serif font-bold text-stone-900 dark:text-stone-100">Dicionário de Runas</h2>
         <p className="text-stone-500 italic text-xs">Selecione um tema para filtrar as runas</p>
       </div>
 
-      <div ref={filtersRef} className="flex flex-wrap justify-center gap-2">
+      <div className="flex flex-wrap justify-center gap-2">
         {FILTER_THEMES.map((theme, index) => (
           <button
             key={theme.id}
@@ -142,7 +142,7 @@ function DictionaryCard({ rune, onSelect }: { rune: Rune, onSelect: () => void }
   const handleMouseEnter = () => {
     timeoutRef.current = setTimeout(() => {
       setShowTooltip(true);
-    }, 500);
+    }, 300);
   };
 
   const handleMouseLeave = () => {
