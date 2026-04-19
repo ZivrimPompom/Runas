@@ -141,10 +141,11 @@ function DictionaryCard({ rune, rotation, onSelect }: { rune: Rune, rotation: nu
         />
       </div>
       <span className={cn(
-        "text-[10px] text-stone-500 font-sans uppercase tracking-widest text-center transition-opacity duration-300",
+        "text-[10px] text-stone-500 font-sans uppercase tracking-widest text-center transition-opacity duration-300 text-center w-24",
         isHovered ? "opacity-100" : "opacity-0"
       )}>
-        {rune.name}
+        <div className="font-semibold text-stone-700 dark:text-stone-300">{rune.name}</div>
+        <div className="text-[8px] font-normal normal-case mt-1">{rune.keywords.slice(0, 3).join(', ')}</div>
       </span>
     </div>
   );
