@@ -43,7 +43,7 @@ export default function Home() {
       {/* Main Content */}
       <section className="w-full max-w-6xl px-4 pb-20">
         <Tabs defaultValue="reading" className="w-full">
-          <div className="flex justify-center mb-12">
+          <div className="flex justify-center mb-6">
             <TabsList className="bg-stone-100/60 dark:bg-stone-900/60 border border-stone-200 dark:border-stone-800 p-1 h-12">
               <TabsTrigger 
                 value="reading" 
