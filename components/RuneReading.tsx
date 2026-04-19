@@ -203,7 +203,7 @@ export function RuneReading() {
   if (!isMounted) return null;
 
   return (
-    <div className="w-full max-w-5xl mx-auto px-4 py-4">
+    <div className="w-full max-w-5xl mx-auto px-4 py-2">
       <AnimatePresence mode="wait">
         {step === 'menu' && (
           <motion.div 
@@ -211,7 +211,7 @@ export function RuneReading() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="flex flex-col items-center space-y-8 py-6"
+            className="flex flex-col items-center space-y-6 py-4"
           >
             <div className="text-center space-y-2">
               <h1 className="text-4xl font-serif font-bold text-stone-900 dark:text-stone-100">Oráculo de Runas</h1>
@@ -261,7 +261,7 @@ export function RuneReading() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="flex flex-col items-center space-y-8 py-4"
+            className="flex flex-col items-center space-y-6 py-2"
           >
             {isShuffling ? (
               <div className="flex flex-col items-center justify-center h-[300px] space-y-4">
@@ -319,7 +319,7 @@ export function RuneReading() {
             key="reading"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="flex flex-col space-y-8 py-4"
+            className="flex flex-col space-y-6 py-2"
           >
             <div className="w-full flex flex-col md:flex-row items-center justify-between border-b border-stone-100 pb-4 gap-4">
               <div className="flex items-center gap-4">
