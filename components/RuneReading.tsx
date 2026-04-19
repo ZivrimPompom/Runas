@@ -376,10 +376,10 @@ export function RuneReading() {
                         <span className="text-[9px] uppercase tracking-[0.2em] text-stone-400 font-bold">{positionLabel}</span>
                         <RuneCard
                           rune={rune}
-                          isFlipped={isFlipped[index]}
                           isInverted={isInverted[index]}
                           onClick={() => flipRune(index)}
                           size={spreadType === '5' ? 'sm' : 'md'}
+                          showBack={!isFlipped[index]}
                         />
                       </div>
                       {isFlipped[index] && (

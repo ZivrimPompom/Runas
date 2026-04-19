@@ -24,7 +24,9 @@ export function RuneCard({ rune, isInverted = false, onClick, className, size = 
 
   if (!rune) return null;
 
-  if (showBack) {
+  const showBackSide = showBack;
+
+  if (showBackSide) {
     return (
       <div className={cn('rounded-xl overflow-hidden', sizeClasses[size], className)}>
         <div className={cn(
