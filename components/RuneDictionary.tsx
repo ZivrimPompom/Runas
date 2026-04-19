@@ -1,7 +1,7 @@
 'use client';
 
 import { ELDER_FUTHARK, Rune } from '@/lib/runes';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { RuneCard } from './RuneCard';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
@@ -28,9 +28,11 @@ export function RuneDictionary() {
   const [selectedTheme, setSelectedTheme] = useState('all');
   const [selectedRune, setSelectedRune] = useState<Rune | null>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const firstButtonRef = useRef<HTMLButtonElement>(null);
   
   useEffect(() => {
     setIsMounted(true);
+    setTimeout(() => firstButtonRef.current?.focus(), 100);
   }, []);
 
   const currentTheme = FILTER_THEMES.find(t => t.id === selectedTheme);
@@ -44,19 +46,21 @@ export function RuneDictionary() {
   if (!isMounted) return null;
 
   return (
-    <div className="w-full max-w-5xl mx-auto px-4 py-12 space-y-8">
-      <div className="text-center space-y-2">
-        <h2 className="text-3xl font-serif font-bold text-stone-900 dark:text-stone-100">Dicionário de Runas</h2>
-        <p className="text-stone-500 italic text-sm">Selecione um tema para filtrar as runas</p>
+    <div className="w-full max-w-5xl mx-auto px-4 py-6 space-y-4">
+      <div className="text-center space-y-1">
+        <h2 className="text-2xl font-serif font-bold text-stone-900 dark:text-stone-100">Dicionário de Runas</h2>
+        <p className="text-stone-500 italic text-xs">Selecione um tema para filtrar as runas</p>
       </div>
 
       <div className="flex flex-wrap justify-center gap-2">
-        {FILTER_THEMES.map((theme) => (
+        {FILTER_THEMES.map((theme, index) => (
           <button
             key={theme.id}
+            ref={index === 0 ? (el) => el?.focus() : null}
+            autoFocus
             onClick={() => setSelectedTheme(theme.id)}
             className={cn(
-              "px-4 py-2 rounded-full text-sm font-medium transition-all duration-300",
+              "px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300",
               selectedTheme === theme.id
                 ? "bg-stone-800 dark:bg-stone-200 text-white dark:text-stone-900 shadow-lg"
                 : "bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-700"
@@ -67,8 +71,8 @@ export function RuneDictionary() {
         ))}
       </div>
 
-      <ScrollArea className="h-[700px] w-full pr-4 bg-stone-50/50 dark:bg-stone-950/20 rounded-[3rem] p-8 border border-stone-100 dark:border-stone-900 shadow-inner overflow-hidden">
-        <div className="flex flex-wrap justify-center gap-8 pb-16 px-6 pt-4">
+      <ScrollArea className="h-[calc(100vh-220px)] w-full pr-4 bg-stone-50/50 dark:bg-stone-950/20 rounded-[2rem] p-6 border border-stone-100 dark:border-stone-900 shadow-inner overflow-hidden">
+        <div className="flex flex-wrap justify-center gap-6 pb-8 px-4">
           {filteredRunes.map((rune) => (
             <DictionaryCard 
               key={rune.id} 

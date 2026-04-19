@@ -26,8 +26,8 @@ export function RuneCard({ rune, isInverted = false, onClick, className, size = 
   return (
     <motion.div
       whileHover={{ 
-        rotate: [0, -3, 3, -2, 2, 0],
-        transition: { duration: 0.4 }
+        rotate: [0, -5, 5, -3, 3, 0],
+        transition: { duration: 0.6 }
       }}
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
