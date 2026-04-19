@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Rune, ELDER_FUTHARK } from '@/lib/runes';
 import { RuneCard, RuneCardBack } from './RuneCard';
 import { Button as ShadcnButton } from '@/components/ui/button';
@@ -49,11 +49,19 @@ export function RuneReading() {
   const [requiredCount, setRequiredCount] = useState(0);
   const [selectedRune, setSelectedRune] = useState<Rune | null>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const selectingRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (step === 'selecting' && selectingRef.current) {
+      setTimeout(() => {
+        selectingRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }, [step]);
 
   const startSelection = async (count: number, type: '1' | '3' | '5' | 'yesno') => {
     setReading(new Array(count).fill(null));
@@ -178,10 +186,10 @@ export function RuneReading() {
 
   const getSpreadLayout = () => {
     if (spreadType === '5') {
-      return "grid grid-cols-3 grid-rows-3 gap-2 md:gap-4 w-full max-w-3xl mx-auto items-center justify-items-center min-h-[350px]";
+      return "grid grid-cols-3 grid-rows-3 gap-x-4 gap-y-2 w-full max-w-4xl mx-auto items-center justify-items-center min-h-[300px]";
     }
     if (spreadType === '3') {
-      return "grid grid-cols-3 gap-16 md:gap-24 w-full max-w-4xl mx-auto items-center justify-items-center min-h-[350px]";
+      return "grid grid-cols-3 gap-20 md:gap-28 w-full max-w-5xl mx-auto items-center justify-items-center min-h-[280px]";
     }
     return "flex flex-wrap justify-center gap-12 min-h-[250px]";
   };
@@ -248,6 +256,7 @@ export function RuneReading() {
         {step === 'selecting' && (
           <motion.div 
             key="selecting"
+            ref={selectingRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -362,8 +371,8 @@ export function RuneReading() {
                   }
 
                   return (
-                    <div key={`result-${index}`} className={cn("flex flex-col items-center space-y-2", gridClass)}>
-                      <div className="flex flex-col items-center space-y-1">
+                    <div key={`result-${index}`} className={cn("flex flex-row items-center gap-3", gridClass)}>
+                      <div className="flex flex-col items-center">
                         <span className="text-[9px] uppercase tracking-[0.2em] text-stone-400 font-bold">{positionLabel}</span>
                         <RuneCard
                           rune={rune}
@@ -375,9 +384,9 @@ export function RuneReading() {
                       </div>
                       {isFlipped[index] && (
                         <motion.div 
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="text-center space-y-1 bg-white dark:bg-stone-900 p-2 rounded-2xl shadow-md border border-stone-50 dark:border-stone-800 max-w-[160px] relative z-20"
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          className="text-center space-y-1 bg-white dark:bg-stone-900 p-2 rounded-2xl shadow-md border border-stone-50 dark:border-stone-800 max-w-[140px] relative z-20"
                         >
                           <h3 className="text-sm font-serif font-bold text-stone-900 dark:text-stone-100">{rune?.name}</h3>
                           <p className="text-[10px] text-stone-600 dark:text-stone-400 italic leading-tight">
