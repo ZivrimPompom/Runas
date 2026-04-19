@@ -58,8 +58,8 @@ export function RuneDictionary() {
         />
       </div>
 
-      <ScrollArea className="h-[700px] w-full pr-4 bg-stone-50/50 dark:bg-stone-950/20 rounded-[3rem] p-8 border border-stone-100 dark:border-stone-900 shadow-inner overflow-hidden">
-        <div className="flex flex-wrap justify-center gap-6 pb-12 px-4">
+      <ScrollArea className="h-[850px] w-full pr-4 bg-stone-50/50 dark:bg-stone-950/20 rounded-[3rem] p-10 border border-stone-100 dark:border-stone-900 shadow-inner overflow-hidden">
+        <div className="flex flex-wrap justify-center gap-10 pb-16 px-6">
           {filteredRunes.map((rune) => (
             <DictionaryCard 
               key={rune.id} 
@@ -129,7 +129,7 @@ function DictionaryCard({ rune, rotation, onSelect }: { rune: Rune, rotation: nu
         className="transition-all duration-500 ease-out"
         style={{ 
           transform: isHovered 
-            ? 'rotate(0deg) scale(1.25) translateY(-8px)' 
+            ? 'rotate(0deg) scale(1.15) translateY(-20px)' 
             : `rotate(${rotation}deg) scale(1)` 
         }}
       >
@@ -144,10 +144,7 @@ function DictionaryCard({ rune, rotation, onSelect }: { rune: Rune, rotation: nu
           )}
         />
       </div>
-      <div className={cn(
-        "h-12 text-center transition-opacity duration-300",
-        isHovered ? "opacity-100" : "opacity-0"
-      )}>
+      <div className="h-16 text-center">
         <div className="font-semibold text-xs text-stone-700 dark:text-stone-300">{rune.name}</div>
         <div className="text-[9px] font-normal text-stone-500 normal-case mt-0.5">{rune.keywords.slice(0, 3).join(', ')}</div>
       </div>
