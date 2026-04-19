@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Rune, ELDER_FUTHARK } from '@/lib/runes';
-import { RuneCard, RuneCardBack } from './RuneCard';
+import { RuneCard } from './RuneCard';
 import { Button as ShadcnButton } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, RotateCcw, Info } from 'lucide-react';
@@ -288,7 +288,7 @@ export function RuneReading() {
                         style={{ transform: `rotate(${rune.initialRotate}deg)` }}
                         onClick={() => pickRune(idx)}
                       >
-                        <RuneCardBack size="sm" />
+                        <RuneCard rune={rune} size="sm" showBack />
                       </div>
                     );
                   })}

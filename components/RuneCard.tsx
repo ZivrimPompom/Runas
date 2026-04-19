@@ -12,9 +12,10 @@ interface RuneCardProps {
   onClick?: () => void;
   className?: string;
   size?: 'sm' | 'md' | 'lg';
+  showBack?: boolean;
 }
 
-export function RuneCard({ rune, isInverted = false, onClick, className, size = 'md' }: RuneCardProps) {
+export function RuneCard({ rune, isInverted = false, onClick, className, size = 'md', showBack = false }: RuneCardProps) {
   const sizeClasses = {
     sm: 'w-14 h-20 text-2xl',
     md: 'w-20 h-28 text-3xl',
@@ -22,6 +23,19 @@ export function RuneCard({ rune, isInverted = false, onClick, className, size = 
   };
 
   if (!rune) return null;
+
+  if (showBack) {
+    return (
+      <div className={cn('rounded-xl overflow-hidden', sizeClasses[size], className)}>
+        <div className={cn(
+          'w-full h-full bg-stone-400 dark:bg-stone-600 border-2 border-stone-500 dark:border-stone-700 rounded-xl flex items-center justify-center',
+          size === 'sm' ? 'shadow-[0_2px_4px_rgba(0,0,0,0.15)]' : size === 'md' ? 'shadow-[0_3px_6px_rgba(0,0,0,0.18)]' : 'shadow-[0_4px_8px_rgba(0,0,0,0.2)]'
+        )}>
+          <div className="absolute inset-0 opacity-20 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/rocky-wall.png')] rounded-xl" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <motion.div
