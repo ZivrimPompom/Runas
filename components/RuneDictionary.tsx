@@ -29,10 +29,14 @@ export function RuneDictionary() {
   const [selectedRune, setSelectedRune] = useState<Rune | null>(null);
   const [isMounted, setIsMounted] = useState(false);
   const firstButtonRef = useRef<HTMLButtonElement>(null);
+  const filtersRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     setIsMounted(true);
-    setTimeout(() => firstButtonRef.current?.focus(), 100);
+    setTimeout(() => {
+      firstButtonRef.current?.focus();
+      filtersRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
   }, []);
 
   const currentTheme = FILTER_THEMES.find(t => t.id === selectedTheme);
@@ -52,7 +56,7 @@ export function RuneDictionary() {
         <p className="text-stone-500 italic text-xs">Selecione um tema para filtrar as runas</p>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-2">
+      <div ref={filtersRef} className="flex flex-wrap justify-center gap-2">
         {FILTER_THEMES.map((theme, index) => (
           <button
             key={theme.id}
@@ -132,11 +136,31 @@ export function RuneDictionary() {
 }
 
 function DictionaryCard({ rune, onSelect }: { rune: Rune, onSelect: () => void }) {
+  const [showTooltip, setShowTooltip] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = () => {
+    timeoutRef.current = setTimeout(() => {
+      setShowTooltip(true);
+    }, 500);
+  };
+
+  const handleMouseLeave = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setShowTooltip(false);
+  };
+
   return (
-    <div className="flex flex-col items-center w-24">
+    <div 
+      className="relative flex flex-col items-center w-20"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={onSelect}
+    >
       <RuneCard
         rune={rune}
-        onClick={onSelect}
         size="sm"
         className="relative mx-auto"
       />
@@ -144,6 +168,14 @@ function DictionaryCard({ rune, onSelect }: { rune: Rune, onSelect: () => void }
         <div className="font-semibold text-xs text-stone-700 dark:text-stone-300">{rune.name}</div>
         <div className="text-[7px] font-normal text-stone-500 normal-case leading-tight">{rune.keywords.slice(0, 2).join(', ')}</div>
       </div>
+      
+      {showTooltip && (
+        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 w-48 bg-stone-800 dark:bg-stone-700 text-stone-100 dark:text-stone-100 text-xs p-3 rounded-lg shadow-xl border border-stone-600 dark:border-stone-500">
+          <div className="font-semibold mb-1">{rune.name}</div>
+          <div className="text-stone-300 dark:text-stone-300 italic mb-2">{rune.meaning}</div>
+          <div className="text-stone-400 dark:text-stone-400">{rune.keywords.slice(0, 3).join(', ')}</div>
+        </div>
+      )}
     </div>
   );
 }
