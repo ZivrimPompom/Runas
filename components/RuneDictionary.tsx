@@ -163,7 +163,7 @@ function DictionaryCard({ rune, onSelect, index }: { rune: Rune, onSelect: () =>
         size="sm"
         className="relative mx-auto hover:scale-110 transition-transform duration-200"
       />
-      <div className="mt-2 text-center">
+      <div className="mt-1 text-center">
         <div className="font-semibold text-xs text-stone-700 dark:text-stone-300">{rune.name}</div>
         <div className="text-[7px] font-normal text-stone-500 normal-case leading-tight">{rune.keywords.slice(0, 2).join(', ')}</div>
       </div>
@@ -171,7 +171,7 @@ function DictionaryCard({ rune, onSelect, index }: { rune: Rune, onSelect: () =>
       {showTooltip && (
         <div className={cn(
           "absolute left-1/2 -translate-x-1/2 z-50 w-48 bg-stone-800 dark:bg-stone-700 text-stone-100 dark:text-stone-100 text-xs p-3 rounded-lg shadow-xl border border-stone-600 dark:border-stone-500",
-          tooltipPosition === 'bottom' ? "top-full mt-2" : "bottom-full mb-2"
+          tooltipPosition === 'bottom' ? "top-full mt-1" : "bottom-full mb-1"
         )}>
           <div className="font-semibold mb-1">{rune.name}</div>
           <div className="text-stone-300 dark:text-stone-300 italic mb-2">{rune.meaning}</div>
