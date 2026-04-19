@@ -156,7 +156,7 @@ function DictionaryCard({ rune, onSelect }: { rune: Rune, onSelect: () => void }
       </div>
       
       {showTooltip && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-50 w-48 bg-stone-800 dark:bg-stone-700 text-stone-100 dark:text-stone-100 text-xs p-3 rounded-lg shadow-xl border border-stone-600 dark:border-stone-500">
+        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 z-50 w-48 bg-stone-800 dark:bg-stone-700 text-stone-100 dark:text-stone-100 text-xs p-3 rounded-lg shadow-xl border border-stone-600 dark:border-stone-500">
           <div className="font-semibold mb-1">{rune.name}</div>
           <div className="text-stone-300 dark:text-stone-300 italic mb-2">{rune.meaning}</div>
           <div className="text-stone-400 dark:text-stone-400">{rune.keywords.slice(0, 3).join(', ')}</div>
