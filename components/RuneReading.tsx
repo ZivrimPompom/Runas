@@ -188,12 +188,12 @@ export function RuneReading() {
 
   const getSpreadLayout = () => {
     if (spreadType === '5') {
-      return "grid grid-cols-3 grid-rows-3 gap-x-12 gap-y-4 w-full max-w-5xl mx-auto items-center justify-items-center min-h-[320px]";
+      return "grid grid-cols-3 grid-rows-3 gap-x-8 gap-y-2 w-full max-w-5xl mx-auto items-center justify-items-center min-h-[280px]";
     }
     if (spreadType === '3') {
-      return "grid grid-cols-3 gap-12 md:gap-16 w-full max-w-4xl mx-auto items-center justify-items-center min-h-[280px]";
+      return "grid grid-cols-3 gap-8 md:gap-10 w-full max-w-4xl mx-auto items-center justify-items-center min-h-[240px]";
     }
-    return "flex flex-wrap justify-center gap-12 min-h-[250px]";
+    return "flex flex-wrap justify-center gap-6 min-h-[200px]";
   };
 
   const revealAll = () => {
@@ -352,9 +352,9 @@ export function RuneReading() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
               {/* Left Column: The Spread */}
-              <div className={cn(getSpreadLayout(), "w-full py-6")}>
+              <div className={cn(getSpreadLayout(), "w-full py-2")}>
                 {reading.map((rune, index) => {
                   let gridClass = "";
                   let positionLabel = "";
@@ -414,14 +414,12 @@ export function RuneReading() {
               {/* Right Column: AI Interpretation */}
               <div className="w-full space-y-6">
                 {!isFlipped.every(v => v) ? (
-                  <div className="h-full flex flex-col items-center justify-center p-12 border-2 border-dashed border-stone-100 dark:border-stone-800 rounded-[2rem] space-y-6">
+                  <div className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-stone-100 dark:border-stone-800 rounded-[2rem] space-y-4">
                     <p className="text-stone-400 dark:text-stone-500 italic text-sm text-center">As runas aguardam sua coragem para serem reveladas.</p>
                     <ShadcnButton 
                       onClick={() => {
                         revealAll();
-                        if (userQuestion.trim()) {
-                          getAiInterpretation();
-                        }
+                        getAiInterpretation();
                       }}
                       className="bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 rounded-full px-8"
                     >
