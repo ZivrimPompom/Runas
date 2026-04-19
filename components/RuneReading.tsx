@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Rune, ELDER_FUTHARK } from '@/lib/runes';
-import { RuneCard } from './RuneCard';
+import { RuneCard, RuneCardBack } from './RuneCard';
 import { Button as ShadcnButton } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, RotateCcw, Info } from 'lucide-react';
@@ -267,10 +267,10 @@ export function RuneReading() {
                   </p>
                 </div>
 
-                <div className="flex flex-wrap justify-center gap-4 max-w-4xl bg-stone-50 p-8 rounded-[2rem] border border-stone-100 shadow-inner">
+                <div className="flex flex-wrap justify-center gap-3 max-w-4xl bg-stone-50 p-6 rounded-[2rem] border border-stone-100 shadow-inner">
                   {pool.map((rune, idx) => {
                     const isSelected = selectedIndices.includes(idx);
-                    if (isSelected) return <div key={`pool-${rune.id}-${idx}`} className="w-24 h-32 invisible" />;
+                    if (isSelected) return <div key={`pool-${rune.id}-${idx}`} className="w-14 h-20 invisible" />;
                     
                     return (
                       <div
@@ -278,12 +278,7 @@ export function RuneReading() {
                         className="cursor-pointer hover:scale-105 transition-transform"
                         style={{ transform: `rotate(${rune.initialRotate}deg)` }}
                       >
-                        <RuneCard
-                          rune={rune}
-                          isFlipped={false}
-                          onClick={() => pickRune(idx)}
-                          size="md"
-                        />
+                        <RuneCardBack size="sm" />
                       </div>
                     );
                   })}
