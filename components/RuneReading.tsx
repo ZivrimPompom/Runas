@@ -178,7 +178,7 @@ export function RuneReading() {
 
   const getSpreadLayout = () => {
     if (spreadType === '5') {
-      return "grid grid-cols-3 grid-rows-3 gap-8 md:gap-16 w-full max-w-2xl mx-auto items-center justify-items-center min-h-[500px]";
+      return "grid grid-cols-3 grid-rows-3 gap-4 md:gap-8 w-full max-w-2xl mx-auto items-center justify-items-center min-h-[400px]";
     }
     if (spreadType === '3') {
       return "grid grid-cols-3 gap-10 md:gap-20 w-full max-w-3xl mx-auto items-center justify-items-center min-h-[400px]";
@@ -267,7 +267,7 @@ export function RuneReading() {
                   </p>
                 </div>
 
-                <div className="flex flex-wrap justify-center gap-3 max-w-4xl bg-stone-50 p-6 rounded-[2rem] border border-stone-100 shadow-inner">
+                <div className="flex flex-wrap justify-center gap-3 max-w-4xl bg-stone-50 p-4 rounded-[2rem] border border-stone-100 shadow-inner max-h-[50vh] overflow-y-auto">
                   {pool.map((rune, idx) => {
                     const isSelected = selectedIndices.includes(idx);
                     if (isSelected) return <div key={`pool-${rune.id}-${idx}`} className="w-14 h-20 invisible" />;
@@ -277,6 +277,7 @@ export function RuneReading() {
                         key={`pool-${rune.id}-${idx}`}
                         className="cursor-pointer hover:scale-105 transition-transform"
                         style={{ transform: `rotate(${rune.initialRotate}deg)` }}
+                        onClick={() => pickRune(idx)}
                       >
                         <RuneCardBack size="sm" />
                       </div>
