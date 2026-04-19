@@ -373,16 +373,6 @@ export function RuneReading() {
 
                   return (
                     <div key={`result-${index}`} className={cn("flex flex-row items-center gap-3", gridClass)}>
-                      <div className="flex flex-col items-center">
-                        <span className="text-[9px] uppercase tracking-[0.2em] text-stone-400 font-bold">{positionLabel}</span>
-                        <RuneCard
-                          rune={rune}
-                          isInverted={isInverted[index]}
-                          onClick={() => flipRune(index)}
-                          size={spreadType === '5' ? 'sm' : 'md'}
-                          showBack={!isFlipped[index]}
-                        />
-                      </div>
                       {isFlipped[index] && (
                         <motion.div 
                           initial={{ opacity: 0, x: -10 }}
@@ -403,6 +393,16 @@ export function RuneReading() {
                           </ShadcnButton>
                         </motion.div>
                       )}
+                      <div className="flex flex-col items-center">
+                        <span className="text-[9px] uppercase tracking-[0.2em] text-stone-400 font-bold">{positionLabel}</span>
+                        <RuneCard
+                          rune={rune}
+                          isInverted={isInverted[index]}
+                          onClick={() => flipRune(index)}
+                          size={spreadType === '5' ? 'sm' : 'md'}
+                          showBack={!isFlipped[index]}
+                        />
+                      </div>
                     </div>
                   );
                 })}
