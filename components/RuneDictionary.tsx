@@ -77,10 +77,11 @@ export function RuneDictionary() {
 
       <ScrollArea className="h-[calc(100vh-220px)] w-full pr-4 bg-stone-50/50 dark:bg-stone-950/20 rounded-[2rem] p-6 border border-stone-100 dark:border-stone-900 shadow-inner overflow-hidden">
         <div className="flex flex-wrap justify-center gap-6 pb-8 px-4">
-          {filteredRunes.map((rune) => (
+          {filteredRunes.map((rune, index) => (
             <DictionaryCard 
               key={rune.id} 
               rune={rune}
+              index={index}
               onSelect={() => setSelectedRune(rune)} 
             />
           ))}
@@ -135,11 +136,23 @@ export function RuneDictionary() {
   );
 }
 
-function DictionaryCard({ rune, onSelect }: { rune: Rune, onSelect: () => void }) {
+function DictionaryCard({ rune, onSelect, index }: { rune: Rune, onSelect: () => void, index: number }) {
   const [showTooltip, setShowTooltip] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [tooltipPosition, setTooltipPosition] = useState<'top' | 'bottom'>('bottom');
+
+  useEffect(() => {
+    if (cardRef.current && showTooltip) {
+      const rect = cardRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const spaceBelow = viewportHeight - rect.bottom;
+      setTooltipPosition(spaceBelow < 150 ? 'top' : 'bottom');
+    }
+  }, [showTooltip]);
 
   return (
     <div 
+      ref={cardRef}
       className="relative flex flex-col items-center w-20"
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
@@ -156,7 +169,10 @@ function DictionaryCard({ rune, onSelect }: { rune: Rune, onSelect: () => void }
       </div>
       
       {showTooltip && (
-        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 z-50 w-48 bg-stone-800 dark:bg-stone-700 text-stone-100 dark:text-stone-100 text-xs p-3 rounded-lg shadow-xl border border-stone-600 dark:border-stone-500">
+        <div className={cn(
+          "absolute left-1/2 -translate-x-1/2 z-50 w-48 bg-stone-800 dark:bg-stone-700 text-stone-100 dark:text-stone-100 text-xs p-3 rounded-lg shadow-xl border border-stone-600 dark:border-stone-500",
+          tooltipPosition === 'bottom' ? "top-full mt-2" : "bottom-full mb-2"
+        )}>
           <div className="font-semibold mb-1">{rune.name}</div>
           <div className="text-stone-300 dark:text-stone-300 italic mb-2">{rune.meaning}</div>
           <div className="text-stone-400 dark:text-stone-400">{rune.keywords.slice(0, 3).join(', ')}</div>
