@@ -16,14 +16,14 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 
-const OPENROUTER_API_KEY = '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';
+const GROQ_API_KEY = process.env.NEXT_PUBLIC_GROQ_API_KEY;
 
-// Initialize OpenRouter lazily to avoid crashes if API key is missing
+// Initialize Groq lazily to avoid crashes if API key is missing
 let aiReady = false;
 const checkAi = () => {
   if (!aiReady) {
-    if (!OPENROUTER_API_KEY) {
-      throw new Error('Chave de API do OpenRouter não configurada.');
+    if (!GROQ_API_KEY) {
+      throw new Error('Chave de API do Groq não configurada.');
     }
     aiReady = true;
   }
@@ -149,16 +149,14 @@ export function RuneReading() {
       - Use um tom solene, poético e inspirador em português brasileiro.
       - Divida a resposta em seções claras.`;
 
-      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_GROQ_API_KEY}`,
           'Content-Type': 'application/json',
-          'HTTP-Referer': window.location.origin,
-          'X-Title': 'Runas Oracle',
         },
         body: JSON.stringify({
-          model: 'meta-llama/llama-3.1-8b-instruct',
+          model: 'llama-3.1-8b-instruct',
           messages: [{ role: 'user', content: prompt }],
         }),
       });
