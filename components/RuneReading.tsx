@@ -6,7 +6,6 @@ import { RuneCard } from './RuneCard';
 import { Button as ShadcnButton } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, RotateCcw, Info } from 'lucide-react';
-import { GoogleGenAI } from '@google/genai';
 import ReactMarkdown from 'react-markdown';
 import { cn } from '@/lib/utils';
 import {
@@ -17,17 +16,18 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 
-// Initialize Gemini lazily to avoid crashes if API key is missing
-let ai: GoogleGenAI | null = null;
-const getAi = () => {
-  if (!ai) {
-    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
-    if (!apiKey) {
-      throw new Error('Chave de API do Gemini não configurada. Adicione NEXT_PUBLIC_GEMINI_API_KEY às variáveis de ambiente.');
+const OPENROUTER_API_KEY = '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';
+
+// Initialize OpenRouter lazily to avoid crashes if API key is missing
+let aiReady = false;
+const checkAi = () => {
+  if (!aiReady) {
+    if (!OPENROUTER_API_KEY) {
+      throw new Error('Chave de API do OpenRouter não configurada.');
     }
-    ai = new GoogleGenAI({ apiKey });
+    aiReady = true;
   }
-  return ai;
+  return aiReady;
 };
 
 interface PoolRune extends Rune {
@@ -118,6 +118,7 @@ export function RuneReading() {
       return;
     }
     
+    checkAi();
     setIsLoadingAi(true);
     try {
       const spreadDescriptions: Record<string, string[]> = {
@@ -143,17 +144,31 @@ export function RuneReading() {
       Por favor, forneça uma interpretação mística, profunda e arquetípica. 
       - Se for uma tiragem de 3 runas, foque no eixo temporal.
       - Se for a Cruz Nórdica (5 runas), analise o conflito e a resolução.
-      - Se for "Sim ou Não", dê uma resposta direta baseada na natureza das runas, mas explique o porquê.
+      - Se for "Sim ou Não", dará uma resposta direta baseada na natureza das runas, mas explique o porquê.
       - Considere runas invertidas (Merkstave) como energias bloqueadas, excessivas ou ocultas.
       - Use um tom solene, poético e inspirador em português brasileiro.
       - Divida a resposta em seções claras.`;
 
-      const response = await getAi().models.generateContent({
-        model: "gemini-2.0-flash",
-        contents: prompt,
+      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+          'Content-Type': 'application/json',
+          'HTTP-Referer': window.location.origin,
+          'X-Title': 'Runas Oracle',
+        },
+        body: JSON.stringify({
+          model: 'meta-llama/llama-3.1-8b-instruct',
+          messages: [{ role: 'user', content: prompt }],
+        }),
       });
 
-      setAiInterpretation(response.text || 'Não foi possível obter uma interpretação no momento.');
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error?.message || `Erro ${response.status}: ${JSON.stringify(data)}`);
+      }
+      const text = data.choices?.[0]?.message?.content;
+      setAiInterpretation(text || 'Não foi possível obter uma interpretação no momento.');
     } catch (error) {
       console.error('Error getting AI interpretation:', error);
       const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido ao conectar com a IA';
