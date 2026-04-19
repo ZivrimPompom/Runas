@@ -188,10 +188,10 @@ export function RuneReading() {
 
   const getSpreadLayout = () => {
     if (spreadType === '5') {
-      return "grid grid-cols-3 grid-rows-3 gap-x-12 gap-y-1 w-full max-w-5xl mx-auto items-center justify-items-center min-h-[240px]";
+      return "grid grid-cols-3 grid-rows-3 gap-x-12 gap-y-2 w-full max-w-5xl mx-auto items-center justify-items-center min-h-[280px]";
     }
     if (spreadType === '3') {
-      return "grid grid-cols-3 gap-20 md:gap-28 w-full max-w-5xl mx-auto items-center justify-items-center min-h-[280px]";
+      return "grid grid-cols-3 gap-12 md:gap-16 w-full max-w-4xl mx-auto items-center justify-items-center min-h-[240px]";
     }
     return "flex flex-wrap justify-center gap-12 min-h-[250px]";
   };
