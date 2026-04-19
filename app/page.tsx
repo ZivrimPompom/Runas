@@ -16,7 +16,7 @@ export default function Home() {
       </div>
 
       {/* Hero Section */}
-      <section className="w-full py-20 px-4 flex flex-col items-center text-center space-y-6">
+      <section className="w-full py-10 px-4 flex flex-col items-center text-center space-y-6">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
