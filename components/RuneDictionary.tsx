@@ -3,9 +3,7 @@
 import { ELDER_FUTHARK, Rune } from '@/lib/runes';
 import { useState, useEffect } from 'react';
 import { RuneCard } from './RuneCard';
-import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   Dialog,
@@ -15,59 +13,74 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 
+const FILTER_THEMES = [
+  { id: 'all', label: 'Todas', keywords: [] },
+  { id: 'amor', label: 'Amor & Relacionamento', keywords: ['Parceria', 'União', 'Equilíbrio', 'Alegria', 'Harmonia', 'Paz', 'Presente'] },
+  { id: 'trabalho', label: 'Trabalho & Sucesso', keywords: ['Sucesso', 'Riqueza', 'Posses', 'Vitória', 'Clareza', 'Progresso', 'Energia'] },
+  { id: 'saude', label: 'Saúde & Vitalidade', keywords: ['Força', 'Saúde', 'Vitalidade', 'Coragem', 'Cura', 'Fertilidade'] },
+  { id: 'protecao', label: 'Proteção', keywords: ['Proteção', 'Defesa', 'Escudo', 'Resistência', 'Continuidade'] },
+  { id: 'transformacao', label: 'Transformação & Crise', keywords: ['Crise', 'Mudança', 'Destruição', 'Purificação', 'Despertar', 'Transformação'] },
+  { id: 'sabedoria', label: 'Sabedoria & Mente', keywords: ['Sabedoria', 'Conhecimento', 'Comunicação', 'Mente', 'Intuição', 'Sinais', 'Inspiração'] },
+  { id: 'destino', label: 'Destino & Espiritualidade', keywords: ['Destino', 'Mistério', 'Segredo', 'Sorte', 'Espiritualidade', 'Herança', 'Tradição'] },
+];
+
 export function RuneDictionary() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedTheme, setSelectedTheme] = useState('all');
   const [selectedRune, setSelectedRune] = useState<Rune | null>(null);
   const [isMounted, setIsMounted] = useState(false);
   
-  // Pre-calculate stable rotations for the dictionary runes
-  const [rotations] = useState(() => 
-    ELDER_FUTHARK.reduce((acc, rune) => {
-      acc[rune.id] = (Math.random() - 0.5) * 25;
-      return acc;
-    }, {} as Record<string, number>)
-  );
-
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMounted(true);
   }, []);
 
-  const filteredRunes = ELDER_FUTHARK.filter(rune => 
-    rune.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    rune.meaning.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    rune.keywords.some(kw => kw.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  const currentTheme = FILTER_THEMES.find(t => t.id === selectedTheme);
+  
+  const filteredRunes = currentTheme?.id === 'all' 
+    ? ELDER_FUTHARK 
+    : ELDER_FUTHARK.filter(rune => 
+        rune.keywords.some(kw => currentTheme.keywords.includes(kw))
+      );
 
   if (!isMounted) return null;
 
   return (
-    <div className="w-full max-w-5xl mx-auto px-4 py-12 space-y-12">
+    <div className="w-full max-w-5xl mx-auto px-4 py-12 space-y-8">
       <div className="text-center space-y-2">
         <h2 className="text-3xl font-serif font-bold text-stone-900 dark:text-stone-100">Dicionário de Runas</h2>
-        <p className="text-stone-500 italic text-sm">Deslize o mouse sobre as pedras para revelá-las</p>
+        <p className="text-stone-500 italic text-sm">Selecione um tema para filtrar as runas</p>
       </div>
 
-      <div className="relative max-w-md mx-auto">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" />
-        <Input
-          placeholder="Buscar runa por nome ou significado..."
-          className="pl-10 bg-stone-100/50 dark:bg-stone-900/50 border-stone-200 dark:border-stone-800 text-stone-800 dark:text-stone-200 placeholder:text-stone-400 dark:placeholder:text-stone-600 rounded-full"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+      <div className="flex flex-wrap justify-center gap-2">
+        {FILTER_THEMES.map((theme) => (
+          <button
+            key={theme.id}
+            onClick={() => setSelectedTheme(theme.id)}
+            className={cn(
+              "px-4 py-2 rounded-full text-sm font-medium transition-all duration-300",
+              selectedTheme === theme.id
+                ? "bg-stone-800 dark:bg-stone-200 text-white dark:text-stone-900 shadow-lg"
+                : "bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-stone-700"
+            )}
+          >
+            {theme.label}
+          </button>
+        ))}
       </div>
 
-      <ScrollArea className="h-[800px] w-full pr-4 bg-stone-50/50 dark:bg-stone-950/20 rounded-[3rem] p-8 border border-stone-100 dark:border-stone-900 shadow-inner overflow-hidden">
+      <ScrollArea className="h-[700px] w-full pr-4 bg-stone-50/50 dark:bg-stone-950/20 rounded-[3rem] p-8 border border-stone-100 dark:border-stone-900 shadow-inner overflow-hidden">
         <div className="flex flex-wrap justify-center gap-8 pb-16 px-6 pt-4">
           {filteredRunes.map((rune) => (
             <DictionaryCard 
               key={rune.id} 
-              rune={rune} 
-              rotation={rotations[rune.id]} 
+              rune={rune}
               onSelect={() => setSelectedRune(rune)} 
             />
           ))}
+        </div>
+        {filteredRunes.length === 0 && (
+          <p className="text-center text-stone-500 py-8">Nenhuma runa encontrada para este tema.</p>
+        )}
+      </ScrollArea>
         </div>
       </ScrollArea>
 
@@ -116,7 +129,7 @@ export function RuneDictionary() {
   );
 }
 
-function DictionaryCard({ rune, rotation, onSelect }: { rune: Rune, rotation: number, onSelect: () => void }) {
+function DictionaryCard({ rune, onSelect }: { rune: Rune, onSelect: () => void }) {
   return (
     <div className="flex flex-col items-center w-24">
       <RuneCard
