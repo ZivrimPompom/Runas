@@ -117,25 +117,15 @@ export function RuneDictionary() {
 }
 
 function DictionaryCard({ rune, rotation, onSelect }: { rune: Rune, rotation: number, onSelect: () => void }) {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
-    <div 
-      className="flex flex-col items-center w-24"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <div className="flex flex-col items-center w-24">
       <RuneCard
         rune={rune}
-        isFlipped={isHovered}
         onClick={onSelect}
         size="sm"
-        className={cn(
-          "relative mx-auto",
-          isHovered ? "scale-110 z-50" : "z-10"
-        )}
+        className="relative mx-auto"
       />
-      <div className="mt-2 text-center min-h-[28px]">
+      <div className="mt-2 text-center">
         <div className="font-semibold text-xs text-stone-700 dark:text-stone-300">{rune.name}</div>
         <div className="text-[7px] font-normal text-stone-500 normal-case leading-tight">{rune.keywords.slice(0, 2).join(', ')}</div>
       </div>
