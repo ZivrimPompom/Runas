@@ -372,12 +372,22 @@ export function RuneReading() {
                   }
 
                   return (
-                    <div key={`result-${index}`} className={cn("flex flex-row items-center gap-3", gridClass)}>
+                    <div key={`result-${index}`} className={cn("flex flex-row items-center gap-1", gridClass)}>
+                      <div className="flex flex-col items-center">
+                        <span className="text-[9px] uppercase tracking-[0.2em] text-stone-400 font-bold">{positionLabel}</span>
+                        <RuneCard
+                          rune={rune}
+                          isInverted={isInverted[index]}
+                          onClick={() => flipRune(index)}
+                          size={spreadType === '5' ? 'sm' : 'md'}
+                          showBack={!isFlipped[index]}
+                        />
+                      </div>
                       {isFlipped[index] && (
                         <motion.div 
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
-                          className="text-center space-y-1 bg-white dark:bg-stone-900 p-2 rounded-2xl shadow-md border border-stone-50 dark:border-stone-800 max-w-[140px] relative z-20"
+                          className="text-center space-y-1 bg-white dark:bg-stone-900 p-2 rounded-2xl shadow-md border border-stone-50 dark:border-stone-800 max-w-[140px] relative z-20 -ml-[15%]"
                         >
                           <h3 className="text-sm font-serif font-bold text-stone-900 dark:text-stone-100">{rune?.name}</h3>
                           <p className="text-[10px] text-stone-600 dark:text-stone-400 italic leading-tight">
@@ -393,16 +403,6 @@ export function RuneReading() {
                           </ShadcnButton>
                         </motion.div>
                       )}
-                      <div className="flex flex-col items-center">
-                        <span className="text-[9px] uppercase tracking-[0.2em] text-stone-400 font-bold">{positionLabel}</span>
-                        <RuneCard
-                          rune={rune}
-                          isInverted={isInverted[index]}
-                          onClick={() => flipRune(index)}
-                          size={spreadType === '5' ? 'sm' : 'md'}
-                          showBack={!isFlipped[index]}
-                        />
-                      </div>
                     </div>
                   );
                 })}
