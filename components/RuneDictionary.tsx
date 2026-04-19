@@ -58,8 +58,8 @@ export function RuneDictionary() {
         />
       </div>
 
-      <ScrollArea className="h-[700px] w-full pr-4 bg-stone-50/50 dark:bg-stone-950/20 rounded-[3rem] p-8 border border-stone-100 dark:border-stone-900 shadow-inner overflow-hidden">
-        <div className="flex flex-wrap justify-center gap-6 pb-8 px-4">
+      <ScrollArea className="h-[800px] w-full pr-4 bg-stone-50/50 dark:bg-stone-950/20 rounded-[3rem] p-8 border border-stone-100 dark:border-stone-900 shadow-inner overflow-hidden">
+        <div className="flex flex-wrap justify-center gap-8 pb-16 px-6 pt-4">
           {filteredRunes.map((rune) => (
             <DictionaryCard 
               key={rune.id} 
@@ -121,32 +121,23 @@ function DictionaryCard({ rune, rotation, onSelect }: { rune: Rune, rotation: nu
 
   return (
     <div 
-      className="flex flex-col items-center space-y-2"
+      className="flex flex-col items-center w-24"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div 
-        className="transition-transform duration-300"
-        style={{ 
-          transform: isHovered 
-            ? 'rotate(0deg) scale(1.1)' 
-            : `rotate(${rotation}deg)` 
-        }}
-      >
-        <RuneCard
-          rune={rune}
-          isFlipped={isHovered}
-          onClick={onSelect}
-          size="sm"
-          className={cn(
-            "relative transition-all duration-300",
-            isHovered ? "z-50 shadow-lg" : "z-10"
-          )}
-        />
-      </div>
-      <div className="h-14 text-center">
+      <RuneCard
+        rune={rune}
+        isFlipped={isHovered}
+        onClick={onSelect}
+        size="sm"
+        className={cn(
+          "relative mx-auto",
+          isHovered ? "scale-110 z-50" : "z-10"
+        )}
+      />
+      <div className="mt-2 text-center min-h-[28px]">
         <div className="font-semibold text-xs text-stone-700 dark:text-stone-300">{rune.name}</div>
-        <div className="text-[8px] font-normal text-stone-500 normal-case mt-0.5">{rune.keywords.slice(0, 3).join(', ')}</div>
+        <div className="text-[7px] font-normal text-stone-500 normal-case leading-tight">{rune.keywords.slice(0, 2).join(', ')}</div>
       </div>
     </div>
   );
