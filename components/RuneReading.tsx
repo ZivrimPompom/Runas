@@ -49,17 +49,19 @@ export function RuneReading() {
   const [requiredCount, setRequiredCount] = useState(0);
   const [selectedRune, setSelectedRune] = useState<Rune | null>(null);
   const [isMounted, setIsMounted] = useState(false);
-  const selectingRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   useEffect(() => {
-    if (step === 'selecting' && selectingRef.current) {
+    if (step === 'selecting') {
       setTimeout(() => {
-        selectingRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+        const element = document.querySelector('h2');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 300);
     }
   }, [step]);
 
@@ -186,7 +188,7 @@ export function RuneReading() {
 
   const getSpreadLayout = () => {
     if (spreadType === '5') {
-      return "grid grid-cols-3 grid-rows-3 gap-x-4 gap-y-2 w-full max-w-4xl mx-auto items-center justify-items-center min-h-[300px]";
+      return "grid grid-cols-3 grid-rows-3 gap-x-8 gap-y-2 w-full max-w-5xl mx-auto items-center justify-items-center min-h-[280px]";
     }
     if (spreadType === '3') {
       return "grid grid-cols-3 gap-20 md:gap-28 w-full max-w-5xl mx-auto items-center justify-items-center min-h-[280px]";
@@ -256,7 +258,6 @@ export function RuneReading() {
         {step === 'selecting' && (
           <motion.div 
             key="selecting"
-            ref={selectingRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
