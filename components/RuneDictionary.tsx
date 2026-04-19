@@ -58,8 +58,8 @@ export function RuneDictionary() {
         />
       </div>
 
-      <ScrollArea className="h-[850px] w-full pr-4 bg-stone-50/50 dark:bg-stone-950/20 rounded-[3rem] p-10 border border-stone-100 dark:border-stone-900 shadow-inner overflow-hidden">
-        <div className="flex flex-wrap justify-center gap-10 pb-16 px-6">
+      <ScrollArea className="h-[700px] w-full pr-4 bg-stone-50/50 dark:bg-stone-950/20 rounded-[3rem] p-8 border border-stone-100 dark:border-stone-900 shadow-inner overflow-hidden">
+        <div className="flex flex-wrap justify-center gap-6 pb-8 px-4">
           {filteredRunes.map((rune) => (
             <DictionaryCard 
               key={rune.id} 
@@ -126,11 +126,11 @@ function DictionaryCard({ rune, rotation, onSelect }: { rune: Rune, rotation: nu
       onMouseLeave={() => setIsHovered(false)}
     >
       <div 
-        className="transition-all duration-500 ease-out"
+        className="transition-transform duration-300"
         style={{ 
           transform: isHovered 
-            ? 'rotate(0deg) scale(1.15) translateY(-20px)' 
-            : `rotate(${rotation}deg) scale(1)` 
+            ? 'rotate(0deg) scale(1.1)' 
+            : `rotate(${rotation}deg)` 
         }}
       >
         <RuneCard
@@ -139,14 +139,14 @@ function DictionaryCard({ rune, rotation, onSelect }: { rune: Rune, rotation: nu
           onClick={onSelect}
           size="sm"
           className={cn(
-            "relative transition-all duration-500",
-            isHovered ? "z-50 shadow-xl" : "z-10"
+            "relative transition-all duration-300",
+            isHovered ? "z-50 shadow-lg" : "z-10"
           )}
         />
       </div>
-      <div className="h-16 text-center">
+      <div className="h-14 text-center">
         <div className="font-semibold text-xs text-stone-700 dark:text-stone-300">{rune.name}</div>
-        <div className="text-[9px] font-normal text-stone-500 normal-case mt-0.5">{rune.keywords.slice(0, 3).join(', ')}</div>
+        <div className="text-[8px] font-normal text-stone-500 normal-case mt-0.5">{rune.keywords.slice(0, 3).join(', ')}</div>
       </div>
     </div>
   );
