@@ -81,8 +81,6 @@ export function RuneDictionary() {
           <p className="text-center text-stone-500 py-8">Nenhuma runa encontrada para este tema.</p>
         )}
       </ScrollArea>
-        </div>
-      </ScrollArea>
 
       <Dialog open={!!selectedRune} onOpenChange={() => setSelectedRune(null)}>
         <DialogContent className="mystic-glass border-stone-200 dark:border-stone-800 text-stone-800 dark:text-stone-200 sm:max-w-[425px]">
