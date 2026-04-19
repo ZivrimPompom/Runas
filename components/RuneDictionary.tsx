@@ -35,10 +35,10 @@ export function RuneDictionary() {
 
   const currentTheme = FILTER_THEMES.find(t => t.id === selectedTheme);
   
-  const filteredRunes = currentTheme?.id === 'all' 
+  const filteredRunes = selectedTheme === 'all' 
     ? ELDER_FUTHARK 
     : ELDER_FUTHARK.filter(rune => 
-        rune.keywords.some(kw => currentTheme.keywords.includes(kw))
+        currentTheme?.keywords?.some(kw => rune.keywords.includes(kw))
       );
 
   if (!isMounted) return null;
