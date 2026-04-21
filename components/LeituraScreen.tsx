@@ -161,7 +161,7 @@ Interpretação mística em português.`;
       <main className="pt-20 pb-32 px-6 max-w-2xl mx-auto min-h-screen">
         <div className="mb-6 text-center">
           <span className="text-primary tracking-[0.2em] uppercase font-bold text-xs block mb-2">Selecione seu Destino</span>
-          <h2 className="text-3xl font-serif text-primary-fixed tracking-wide italic">Como deseja ler as Runas?</h2>
+          <h2 className="text-4xl font-serif text-[#e5e2e1] leading-tight mb-3">Como deseja ler as Runas?</h2>
           <p className="text-[#d1c5b4] max-w-2xl mt-2 leading-relaxed italic text-sm mx-auto">As vozes dos antigos ecoam no silêncio. <br /> Escolha a tiragem que sua alma necessita neste momento.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

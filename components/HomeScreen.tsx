@@ -32,7 +32,7 @@ export function HomeScreen() {
     <main className="pt-20 pb-12 px-4 max-w-2xl mx-auto flex flex-col items-center min-h-screen">
       {/* Hero Section */}
       <section className="text-center mb-6">
-        <h2 className="font-serif text-primary-fixed text-3xl md:text-4xl mb-2 tracking-wide">Oráculo de Runas</h2>
+        <h2 className="text-4xl font-serif text-[#e5e2e1] leading-tight mb-3">Oráculo de Runas</h2>
         <p className="text-[#d1c5b4] text-sm leading-relaxed max-w-lg mx-auto italic">
           Desvende os mistérios do antigo alfabeto nórdico.
         </p>
