@@ -162,20 +162,20 @@
     --glow-color: rgba(214, 211, 209, 0.3);
     --glow-secondary: rgba(231, 229, 228, 0.2);
 
-    /* Stitch colors */
-    --surface-container-lowest: #0e0e0e;
-    --surface-container-low: #1c1b1b;
-    --surface-container: #201f1f;
-    --surface-container-high: #2a2a2a;
-    --surface-container-highest: #353534;
-    --surface-variant: #353534;
-    --surface-bright: #393939;
-    --surface-tint: #e9c349;
+    /* Light Mode Surface Colors */
+    --surface-container-lowest: #ffffff;
+    --surface-container-low: #f7f2f2;
+    --surface-container: #f1ecec;
+    --surface-container-high: #ebe6e6;
+    --surface-container-highest: #e5e1e1;
+    --surface-variant: #e5e1e1;
+    --surface-bright: #fcf8f8;
+    --surface-tint: #6e5d00;
     --primary-fixed: #ffe088;
     --primary-fixed-dim: #e9c349;
-    --primary-container: #c5a12a;
-    --surface-dim: #131313;
-    --surface: #131313;
+    --primary-container: #ffe088;
+    --surface-dim: #ded9d9;
+    --surface: #fcf8f8;
 }
 
 .dark {

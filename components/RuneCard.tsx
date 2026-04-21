@@ -35,8 +35,8 @@ export function RuneCard({ rune, isInverted = false, onClick, className, size = 
           <div className="absolute inset-0 opacity-20 mix-blend-overlay" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/stardust.png")' }}></div>
           
           {/* Center mystic symbol */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-[0.15] group-hover:opacity-[0.25] transition-opacity duration-500">
-            <span className="font-serif text-primary drop-shadow-[0_0_8px_rgba(233,195,73,0.6)]" style={{ fontSize: size === 'sm' ? '2rem' : size === 'md' ? '3rem' : '4rem' }}>
+          <div className="absolute inset-0 flex items-center justify-center opacity-[0.25] group-hover:opacity-[0.4] transition-opacity duration-500">
+            <span className="font-serif text-[#e9c349] rune-glow" style={{ fontSize: size === 'sm' ? '2rem' : size === 'md' ? '3rem' : '4rem' }}>
               ᛟ
             </span>
           </div>
@@ -66,7 +66,7 @@ export function RuneCard({ rune, isInverted = false, onClick, className, size = 
             <motion.span 
               animate={{ rotate: isInverted ? 180 : 0 }}
               transition={{ duration: 0.5 }}
-              className="text-primary drop-shadow-[0_0_8px_rgba(233,195,73,0.4)] inline-block font-bold"
+              className="text-[#e9c349] rune-glow inline-block font-bold"
             >
               {rune.symbol}
             </motion.span>
@@ -94,8 +94,8 @@ export function RuneCardBack({ size = 'md', className }: { size?: 'sm' | 'md' | 
         <div className="absolute inset-0 opacity-20 mix-blend-overlay" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/stardust.png")' }}></div>
         
         {/* Center mystic symbol */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-[0.15] group-hover:opacity-[0.25] transition-opacity duration-500">
-          <span className="font-serif text-primary drop-shadow-[0_0_8px_rgba(233,195,73,0.6)]" style={{ fontSize: size === 'sm' ? '2rem' : size === 'md' ? '3rem' : '4rem' }}>
+        <div className="absolute inset-0 flex items-center justify-center opacity-[0.25] group-hover:opacity-[0.4] transition-opacity duration-500">
+          <span className="font-serif text-[#e9c349] rune-glow" style={{ fontSize: size === 'sm' ? '2rem' : size === 'md' ? '3rem' : '4rem' }}>
             ᛟ
           </span>
         </div>

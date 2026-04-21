@@ -86,11 +86,11 @@ export function HomeScreen() {
             </div>
             <div className="flex-1 flex flex-row items-center justify-between gap-3 overflow-hidden">
               <div className="flex flex-col justify-center min-w-[80px]">
-                <h4 className="text-[9px] font-serif tracking-widest text-primary/80 mb-0.5">RUNA DO DIA</h4>
-                <h5 className="text-sm font-serif text-primary-fixed leading-tight truncate">{runaDoDia.name}</h5>
+                <h4 className="text-[10px] font-serif tracking-[0.2em] text-[#e9c349]/90 mb-0.5">RUNA DO DIA</h4>
+                <h5 className="text-sm font-serif text-[#ffe088] font-bold leading-tight truncate">{runaDoDia.name}</h5>
               </div>
-              <div className="h-8 w-px bg-primary/20 hidden sm:block"></div>
-              <p className="text-[#d1c5b4] text-xs line-clamp-2 sm:line-clamp-3 text-right">
+              <div className="h-8 w-px bg-[#e9c349]/20 hidden sm:block"></div>
+              <p className="text-[#d1c5b4] text-xs line-clamp-2 sm:line-clamp-3 text-right italic">
                 {runaDoDia.meaning}
               </p>
             </div>

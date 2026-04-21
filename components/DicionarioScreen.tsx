@@ -52,17 +52,39 @@ export function DicionarioScreen() {
   return (
     <main className="pt-24 pb-32 px-6 max-w-7xl mx-auto">
       {/* Header Section */}
-      <header className="mb-8 text-center md:text-left flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-        <div>
-          <span className="text-primary tracking-[0.2em] uppercase font-bold text-xs block mb-2">Compêndio Sagrado</span>
-          <h2 className="text-3xl font-serif text-[#e5e2e1] leading-tight">O Futhark Antigo</h2>
-          <p className="text-[#d1c5b4] max-w-2xl mt-2 leading-relaxed italic text-sm">
-            Decifre o sussurro das pedras. Cada glifo é uma chave para as forças primordiais.
+      <header className="mb-12 text-center flex flex-col items-center gap-6">
+        <div className="max-w-3xl">
+          <span className="text-[#e9c349] tracking-[0.2em] uppercase font-bold text-xs block mb-2">Compêndio Sagrado</span>
+          <h2 className="text-4xl font-serif text-[#e5e2e1] leading-tight mb-3">O Futhark Antigo</h2>
+          <p className="text-[#d1c5b4] max-w-2xl mt-2 leading-relaxed italic text-sm mx-auto">
+            Decifre o sussurro das pedras. <br /> Cada glifo é uma chave para as forças primordiais.
           </p>
         </div>
 
-        {/* Search Bar with Pulldown */}
-        <div className="relative w-full max-w-xs mx-auto md:mx-0">
+      </header>
+
+      {/* Search & Filters Section */}
+      <div className="flex flex-col items-center gap-6 mb-12">
+        {/* Filters */}
+        <div className="flex flex-wrap justify-center gap-2" onClick={() => setShowSearchDropdown(false)}>
+        {FILTER_THEMES.map((theme) => (
+          <button
+            key={theme.id}
+            ref={theme.id === selectedTheme ? firstButtonRef : null}
+            onClick={() => setSelectedTheme(theme.id)}
+            className={`px-4 py-2 rounded-full text-xs font-serif tracking-wider transition-all duration-300 ${
+              selectedTheme === theme.id
+                ? 'bg-primary text-[#3e2b00] font-semibold shadow-[0_0_15px_rgba(233,195,73,0.4)]'
+                : 'bg-[#2a2a2a] text-[#d1c5b4] hover:bg-[#353534] border border-[#4e4639]/20'
+            }`}
+          >
+            {theme.label}
+          </button>
+        ))}
+      </div>
+
+        {/* Search Bar */}
+        <div className="relative w-full max-w-xs mx-auto">
           <div className="relative">
             <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#9a8f80] text-sm">search</span>
             <input
@@ -100,28 +122,10 @@ export function DicionarioScreen() {
             </div>
           )}
         </div>
-      </header>
-
-      {/* Filters */}
-      <div className="flex flex-wrap gap-2 mb-8" onClick={() => setShowSearchDropdown(false)}>
-        {FILTER_THEMES.map((theme) => (
-          <button
-            key={theme.id}
-            ref={theme.id === selectedTheme ? firstButtonRef : null}
-            onClick={() => setSelectedTheme(theme.id)}
-            className={`px-4 py-2 rounded-full text-xs font-serif tracking-wider transition-all duration-300 ${
-              selectedTheme === theme.id
-                ? 'bg-primary text-[#241a00] shadow-[0_0_15px_rgba(233,195,73,0.4)]'
-                : 'bg-[#2a2a2a] text-[#d1c5b4] hover:bg-[#353534] border border-[#4e4639]/20'
-            }`}
-          >
-            {theme.label}
-          </button>
-        ))}
-      </div>
+    </div>
 
       {/* Results count */}
-      <p className="text-xs text-[#9a8f80] mb-4">
+      <p className="text-xs text-[#9a8f80] mb-4 text-center">
         {filteredRunes.length} {filteredRunes.length === 1 ? 'runa encontrada' : 'runas encontradas'}
       </p>
 
@@ -147,7 +151,7 @@ export function DicionarioScreen() {
                 backgroundImage: 'radial-gradient(circle at 30% 30%, rgba(53, 53, 52, 0.4), rgba(14, 14, 14, 0.9))'
               }}
             >
-              <span className="text-2xl lg:text-3xl text-primary rune-glow opacity-80 group-hover:opacity-100 transition-opacity">
+              <span className="text-2xl lg:text-3xl text-[#e9c349] rune-glow opacity-80 group-hover:opacity-100 transition-opacity">
                 {rune.symbol}
               </span>
             </div>
@@ -167,7 +171,7 @@ export function DicionarioScreen() {
           <DialogContent className="max-w-md bg-[#201f1f] border-[#4e4639]/20 text-[#e5e2e1]">
             <DialogHeader>
               <DialogTitle className="text-2xl font-serif text-[#e5e2e1] flex items-center gap-3">
-                <span className="text-4xl text-primary">{selectedRune?.symbol}</span>
+                <span className="text-4xl text-[#e9c349]">{selectedRune?.symbol}</span>
                 {selectedRune?.name}
               </DialogTitle>
               <DialogDescription className="text-[#d1c5b4] italic">
@@ -222,8 +226,8 @@ export function DicionarioScreen() {
           }}
         >
           <div className="font-serif font-bold mb-2 flex items-center gap-2">
-            <span className="text-2xl text-primary">{hoveredRune.rune.symbol}</span>
-            <span className="text-lg">{hoveredRune.rune.name}</span>
+            <span className="text-2xl text-[#e9c349]">{hoveredRune.rune.symbol}</span>
+            <span className="text-lg text-primary-fixed">{hoveredRune.rune.name}</span>
           </div>
           <div className="text-[#d1c5b4] text-xs leading-relaxed mb-3">
             {hoveredRune.rune.description}
